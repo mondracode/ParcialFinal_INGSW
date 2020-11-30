@@ -73,7 +73,7 @@ public class MainView extends javax.swing.JFrame {
                         .addComponent(enviarDatoB)
                         .addGap(18, 18, 18)
                         .addComponent(mostrarDatosB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 370, Short.MAX_VALUE)
                         .addComponent(paraParcialB)))
                 .addContainerGap())
         );

@@ -6,6 +6,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NonUniqueResultException;
@@ -69,9 +70,35 @@ public class TramaDatosCRUD {
         }
     }
     
-    public ArrayList<TramaDatos> leerMultiple(){
+    public static ArrayList<TramaDatos> leerMultiple(int id_s){
         //TO DO
-        return null;
+        EntityManager em = emf.createEntityManager();
+        List<TramaDatos> res = null;
+        Query q = em.createQuery("SELECT t FROM TramaDatos t " + 
+                                "WHERE t.id_sensor =:id "+
+                                "ORDER BY t.id_toma DESC")
+                                .setParameter("id", id_s);
+        
+        try{
+            res = q.getResultList();
+        }  catch (Exception e){
+            e.printStackTrace();
+        } finally{
+            em.close();
+            ArrayList<TramaDatos> list = new ArrayList<>(res.size());
+            if(res.size() > 5){
+                for (int i = 0; i < 5; i++) {
+                    list.add(res.get(i));
+                }
+            }
+            else{
+                list.addAll(res);
+            }
+            
+            
+            return list;
+        }
+        
     } 
     
     public static boolean actualizar(TramaDatos t, TramaDatos new_t){

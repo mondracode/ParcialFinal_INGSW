@@ -86,21 +86,8 @@ public class EnviarDato extends javax.swing.JPanel {
 
     private void enviarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarBActionPerformed
         // TODO add your handling code here:
+        Controller.GestorDatos.enviarDato(Integer.parseInt(IDTextField.getText()));
         
-        int id = Integer.parseInt(IDTextField.getText());
-        System.out.println(id);
-        if(id < 1 || id > 38){
-            return;
-        }
-        
-        Sensor s = SensorCRUD.buscarSensor(id);
-        
-        //valor aleatorio permitido
-        int valor_tomado = (int)(Math.random()*((s.getMax_permitido() - s.getMin_permitido())+1))+s.getMin_permitido();
-        
-        TramaDatos t = new TramaDatos(id, valor_tomado, LocalDateTime.now().toString());
-        
-        TramaDatosCRUD.insertar(t);
     }//GEN-LAST:event_enviarBActionPerformed
 
 
