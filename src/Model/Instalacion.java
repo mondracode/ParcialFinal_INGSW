@@ -5,13 +5,38 @@
  */
 package Model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author smggu
  */
+@Entity
+@Table(name="Instalacion")
 public class Instalacion {
-    private int id_sensor, id_instalacion;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id_instalacion;
+    
+    private int id_sensor;
     private String ubicacion_sensor, tipo_sensor;
+
+    public Instalacion(int id_instalacion, int id_sensor, String ubicacion_sensor, String tipo_sensor) {
+        this.id_instalacion = id_instalacion;
+        this.id_sensor = id_sensor;
+        this.ubicacion_sensor = ubicacion_sensor;
+        this.tipo_sensor = tipo_sensor;
+    }
+
+    public Instalacion() {
+    }
+    
+    
 
     public int getId_sensor() {
         return id_sensor;

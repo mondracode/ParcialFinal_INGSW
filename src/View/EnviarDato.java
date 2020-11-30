@@ -5,6 +5,8 @@
  */
 package View;
 
+import Model.*;
+import java.time.LocalDateTime;
 /**
  *
  * @author smggu
@@ -29,12 +31,23 @@ public class EnviarDato extends javax.swing.JPanel {
 
         IDLabel = new javax.swing.JLabel();
         IDTextField = new javax.swing.JTextField();
+        invalidTField = new javax.swing.JLabel();
+        enviarB = new javax.swing.JButton();
 
         IDLabel.setText("ID del Sensor");
 
         IDTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IDTextFieldActionPerformed(evt);
+            }
+        });
+
+        invalidTField.setText("Inserta un ID entre 1 y 38");
+
+        enviarB.setText("Enviar");
+        enviarB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enviarBActionPerformed(evt);
             }
         });
 
@@ -47,16 +60,23 @@ public class EnviarDato extends javax.swing.JPanel {
                 .addComponent(IDLabel)
                 .addGap(18, 18, 18)
                 .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(enviarB)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(invalidTField, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(IDLabel)
-                    .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(invalidTField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(IDLabel)
+                        .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(enviarB)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -64,9 +84,30 @@ public class EnviarDato extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_IDTextFieldActionPerformed
 
+    private void enviarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarBActionPerformed
+        // TODO add your handling code here:
+        
+        int id = Integer.parseInt(IDTextField.getText());
+        System.out.println(id);
+        if(id < 1 || id > 38){
+            return;
+        }
+        
+        Sensor s = SensorCRUD.buscarSensor(id);
+        
+        //valor aleatorio permitido
+        int valor_tomado = (int)(Math.random()*((s.getMax_permitido() - s.getMin_permitido())+1))+s.getMin_permitido();
+        
+        TramaDatos t = new TramaDatos(id, valor_tomado, LocalDateTime.now().toString());
+        
+        TramaDatosCRUD.insertar(t);
+    }//GEN-LAST:event_enviarBActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IDLabel;
     private javax.swing.JTextField IDTextField;
+    private javax.swing.JButton enviarB;
+    private javax.swing.JLabel invalidTField;
     // End of variables declaration//GEN-END:variables
 }

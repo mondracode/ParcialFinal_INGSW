@@ -6,13 +6,37 @@
 package Model;
 
 import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 /**
  *
  * @author smggu
  */
+
+@Entity
+@Table(name="TramaDatos")
 public class TramaDatos implements Cloneable {
-    private int id_toma, id_sensor, valor_tomado;
-    private LocalDate fecha_toma;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id_toma;
+    
+    private int id_sensor, valor_tomado;
+    private String fecha_toma;
+
+    public TramaDatos(int id_sensor, int valor_tomado, String fecha_toma) {
+        this.id_sensor = id_sensor;
+        this.valor_tomado = valor_tomado;
+        this.fecha_toma = fecha_toma;
+    }
+
+    public TramaDatos() {
+    }
+    
+    
     
     public int getId_toma() {
         return id_toma;
@@ -38,11 +62,11 @@ public class TramaDatos implements Cloneable {
         this.valor_tomado = valor_tomado;
     }
 
-    public LocalDate getFecha_toma() {
+    public String getFecha_toma() {
         return fecha_toma;
     }
 
-    public void setFecha_toma(LocalDate fecha_toma) {
+    public void setFecha_toma(String fecha_toma) {
         this.fecha_toma = fecha_toma;
     }
     

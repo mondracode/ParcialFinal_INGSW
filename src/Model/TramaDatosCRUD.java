@@ -19,7 +19,7 @@ import javax.persistence.Query;
 public class TramaDatosCRUD {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("BONO_DBU");
     
-    public void insertar(TramaDatos trama){
+    public static void insertar(TramaDatos trama){
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         try{
@@ -33,7 +33,7 @@ public class TramaDatosCRUD {
         }
     }
     
-    public boolean eliminar(TramaDatos trama){
+    public static boolean eliminar(TramaDatos trama){
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;
@@ -48,7 +48,7 @@ public class TramaDatosCRUD {
         }
     }
     
-    public TramaDatos leerSingle(TramaDatos trama){
+    public static TramaDatos leerSingle(TramaDatos trama){
         EntityManager em = emf.createEntityManager();
         TramaDatos res = null;
         Query q = em.createQuery("SELECT t FROM TramaDatos t " + 
@@ -74,7 +74,7 @@ public class TramaDatosCRUD {
         return null;
     } 
     
-    public boolean actualizar(TramaDatos t, TramaDatos new_t){
+    public static boolean actualizar(TramaDatos t, TramaDatos new_t){
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;

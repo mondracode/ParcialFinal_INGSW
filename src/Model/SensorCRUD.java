@@ -19,7 +19,7 @@ import javax.persistence.Query;
 public class SensorCRUD {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("BONO_DBU");
     
-    public void insertar(Sensor sensor){
+    public static boolean insertar(Sensor sensor){
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         try{
@@ -30,10 +30,11 @@ public class SensorCRUD {
             em.getTransaction().rollback();
         } finally {
             em.close();
+            return true;
         }
     }
     
-    public boolean eliminar(Sensor sensor){
+    public static boolean eliminar(Sensor sensor){
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;
@@ -48,7 +49,7 @@ public class SensorCRUD {
         }
     }
     
-    public Sensor leerSingle(Sensor sensor){
+    public static Sensor leerSingle(Sensor sensor){
         EntityManager em = emf.createEntityManager();
         Sensor res = null;
         Query q = em.createQuery("SELECT t FROM Sensor t " + 
@@ -69,12 +70,31 @@ public class SensorCRUD {
         }
     }
     
-    public ArrayList<Sensor> leerMultiple(){
+    public static Sensor buscarSensor(int id_s){
+        EntityManager em = emf.createEntityManager();
+        Sensor res = null;
+        Query q = em.createQuery("SELECT t FROM Sensor t " + 
+                                "WHERE t.id = :id")
+                                .setParameter("id", id_s);
+        
+        try{
+            res = (Sensor)q.getSingleResult();
+        } catch(NonUniqueResultException e){
+            res = (Sensor)q.getResultList().get(0);
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally{
+            em.close();
+            return res;
+        }
+    }
+    
+    public static ArrayList<Sensor> leerMultiple(){
         //TO DO
         return null;
     } 
     
-    public boolean actualizar(Sensor s, Sensor new_s){
+    public static boolean actualizar(Sensor s, Sensor new_s){
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;
