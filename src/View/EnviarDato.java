@@ -31,18 +31,15 @@ public class EnviarDato extends javax.swing.JPanel {
 
         IDLabel = new javax.swing.JLabel();
         IDTextField = new javax.swing.JTextField();
-        invalidTField = new javax.swing.JLabel();
         enviarB = new javax.swing.JButton();
 
-        IDLabel.setText("ID del Sensor");
+        IDLabel.setText("ID de la instalación");
 
         IDTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IDTextFieldActionPerformed(evt);
             }
         });
-
-        invalidTField.setText("Inserta un ID entre 1 y 38");
 
         enviarB.setText("Enviar");
         enviarB.addActionListener(new java.awt.event.ActionListener() {
@@ -58,24 +55,20 @@ public class EnviarDato extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(IDLabel)
-                .addGap(18, 18, 18)
-                .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(enviarB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(invalidTField, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(174, 174, 174))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(invalidTField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(IDLabel)
-                        .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(enviarB)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(enviarB)
+                    .addComponent(IDLabel))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -95,6 +88,5 @@ public class EnviarDato extends javax.swing.JPanel {
     private javax.swing.JLabel IDLabel;
     private javax.swing.JTextField IDTextField;
     private javax.swing.JButton enviarB;
-    private javax.swing.JLabel invalidTField;
     // End of variables declaration//GEN-END:variables
 }

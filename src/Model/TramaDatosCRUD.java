@@ -12,111 +12,106 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-
 /**
  *
  * @author smggu
  */
 public class TramaDatosCRUD {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("BONO_DBU");
-    
-    public static void insertar(TramaDatos trama){
+
+    public static void insertar(TramaDatos trama) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        try{
+        try {
             em.persist(trama);
             em.getTransaction().commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();
         } finally {
             em.close();
         }
     }
-    
-    public static boolean eliminar(TramaDatos trama){
+
+    public static boolean eliminar(TramaDatos trama) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;
-        try{
+        try {
             em.remove(trama);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();
-        } finally{
+        } finally {
             em.close();
             return done;
         }
     }
-    
-    public static TramaDatos leerSingle(TramaDatos trama){
+
+    public static TramaDatos leerSingle(TramaDatos trama) {
         EntityManager em = emf.createEntityManager();
         TramaDatos res = null;
-        Query q = em.createQuery("SELECT t FROM TramaDatos t " + 
-                                "WHERE  t.id_toma LIKE :id_toma" + 
-                                " AND t.id_sensor LIKE :id_sensor")
-                                .setParameter("id_toma", trama.getId_toma())
-                                .setParameter("id_sensor", trama.getId_sensor());
-        
-        try{
-            res = (TramaDatos)q.getSingleResult();
-        } catch(NonUniqueResultException e){
-            res = (TramaDatos)q.getResultList().get(0);
-        } catch (Exception e){
+        Query q = em
+                .createQuery("SELECT t FROM TramaDatos t " + "WHERE  t.id_toma LIKE :id_toma"
+                        + " AND t.id_sensor LIKE :id_sensor")
+                .setParameter("id_toma", trama.getId_toma()).setParameter("id_sensor", trama.getId_instalacion());
+
+        try {
+            res = (TramaDatos) q.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            res = (TramaDatos) q.getResultList().get(0);
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
+        } finally {
             em.close();
             return res;
         }
     }
-    
-    public static ArrayList<TramaDatos> leerMultiple(int id_s){
-        //TO DO
+
+    public static ArrayList<TramaDatos> leerMultiple(int id_s) {
+        // TO DO
         EntityManager em = emf.createEntityManager();
         List<TramaDatos> res = null;
-        Query q = em.createQuery("SELECT t FROM TramaDatos t " + 
-                                "WHERE t.id_sensor =:id "+
-                                "ORDER BY t.id_toma DESC")
-                                .setParameter("id", id_s);
-        
-        try{
+        Query q = em
+                .createQuery("SELECT t FROM TramaDatos t " + "WHERE t.id_instalacion =:id " + "ORDER BY t.id_toma DESC")
+                .setParameter("id", id_s);
+
+        try {
             res = q.getResultList();
-        }  catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
+        } finally {
             em.close();
             ArrayList<TramaDatos> list = new ArrayList<>(res.size());
-            if(res.size() > 5){
+            if (res.size() > 5) {
                 for (int i = 0; i < 5; i++) {
                     list.add(res.get(i));
                 }
-            }
-            else{
+            } else {
                 list.addAll(res);
             }
-            
-            
+
             return list;
         }
-        
-    } 
-    
-    public static boolean actualizar(TramaDatos t, TramaDatos new_t){
+
+    }
+
+    public static boolean actualizar(TramaDatos t, TramaDatos new_t) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;
-        
-        try{
+
+        try {
             t = leerSingle(t);
-            t = (TramaDatos)new_t.clone();
+            t = (TramaDatos) new_t.clone();
             em.merge(t);
             em.getTransaction().commit();
             done = true;
-            
-        }catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();
-        } finally{
+        } finally {
             em.close();
             return done;
         }

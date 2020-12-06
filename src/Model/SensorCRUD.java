@@ -18,14 +18,14 @@ import javax.persistence.Query;
  */
 public class SensorCRUD {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("BONO_DBU");
-    
-    public static boolean insertar(Sensor sensor){
+
+    public static boolean insertar(Sensor sensor) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        try{
+        try {
             em.persist(sensor);
             em.getTransaction().commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();
         } finally {
@@ -33,83 +33,80 @@ public class SensorCRUD {
             return true;
         }
     }
-    
-    public static boolean eliminar(Sensor sensor){
+
+    public static boolean eliminar(Sensor sensor) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;
-        try{
+        try {
             em.remove(sensor);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();
-        } finally{
+        } finally {
             em.close();
             return done;
         }
     }
-    
-    public static Sensor leerSingle(Sensor sensor){
+
+    public static Sensor leerSingle(Sensor sensor) {
         EntityManager em = emf.createEntityManager();
         Sensor res = null;
-        Query q = em.createQuery("SELECT t FROM Sensor t " + 
-                                "WHERE  t.id_toma LIKE :tipo" + 
-                                " AND t.id_sensor LIKE :nombre")
-                                .setParameter("tipo", sensor.getTipo())
-                                .setParameter("nombre", sensor.getNombre());
-        
-        try{
-            res = (Sensor)q.getSingleResult();
-        } catch(NonUniqueResultException e){
-            res = (Sensor)q.getResultList().get(0);
-        } catch (Exception e){
+        Query q = em
+                .createQuery(
+                        "SELECT t FROM Sensor t " + "WHERE  t.id_toma LIKE :tipo" + " AND t.id_sensor LIKE :nombre")
+                .setParameter("tipo", sensor.getTipo()).setParameter("nombre", sensor.getNombre());
+
+        try {
+            res = (Sensor) q.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            res = (Sensor) q.getResultList().get(0);
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
+        } finally {
             em.close();
             return res;
         }
     }
-    
-    public static Sensor buscarSensor(int id_s){
+
+    public static Sensor buscarSensor(int id_s) {
         EntityManager em = emf.createEntityManager();
         Sensor res = null;
-        Query q = em.createQuery("SELECT t FROM Sensor t " + 
-                                "WHERE t.id = :id")
-                                .setParameter("id", id_s);
-        
-        try{
-            res = (Sensor)q.getSingleResult();
-        } catch(NonUniqueResultException e){
-            res = (Sensor)q.getResultList().get(0);
-        } catch (Exception e){
+        Query q = em.createQuery("SELECT t FROM Sensor t " + "WHERE t.id_sensor = :id").setParameter("id", id_s);
+
+        try {
+            res = (Sensor) q.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            res = (Sensor) q.getResultList().get(0);
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
+        } finally {
             em.close();
             return res;
         }
     }
-    
-    public static ArrayList<Sensor> leerMultiple(){
-        //TO DO
+
+    public static ArrayList<Sensor> leerMultiple() {
+        // TO DO
         return null;
-    } 
-    
-    public static boolean actualizar(Sensor s, Sensor new_s){
+    }
+
+    public static boolean actualizar(Sensor s, Sensor new_s) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;
-        
-        try{
+
+        try {
             s = leerSingle(s);
-            s = (Sensor)new_s.clone();
+            s = (Sensor) new_s.clone();
             em.merge(s);
             em.getTransaction().commit();
             done = true;
-            
-        }catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();
-        } finally{
+        } finally {
             em.close();
             return done;
         }

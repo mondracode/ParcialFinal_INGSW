@@ -9,12 +9,11 @@ package Model;
  *
  * @author smggu
  */
-public class InsertarSensores {
-
+public class InsertarInstalaciones {
     public static void main(String[] args) {
-
-        Sensor s = new Sensor("LED3", "Módulo LED 3 colores", 0, 16777215, 0, false);
-        boolean x = SensorCRUD.insertar(s);
+        Instalacion i = new Instalacion(1, "Sótano", SensorCRUD.buscarSensor(1).getTipo());
+        boolean x = InstalacionCRUD.insertar(i);
         System.out.println(x);
+
     }
 }

@@ -18,78 +18,97 @@ import javax.persistence.Query;
  */
 public class InstalacionCRUD {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("BONO_DBU");
-    
-    public void insertar(Instalacion instalacion){
+
+    public static boolean insertar(Instalacion instalacion) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        try{
+        try {
             em.persist(instalacion);
             em.getTransaction().commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();
         } finally {
             em.close();
+            return true;
         }
     }
-    
-    public boolean eliminar(Instalacion instalacion){
+
+    public static boolean eliminar(Instalacion instalacion) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;
-        try{
+        try {
             em.remove(instalacion);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();
-        } finally{
+        } finally {
             em.close();
             return done;
         }
     }
-    
-    public Instalacion leerSingle(Instalacion instalacion){
+
+    public static Instalacion buscarInstalacion(int id_i) {
         EntityManager em = emf.createEntityManager();
         Instalacion res = null;
-        Query q = em.createQuery("SELECT t FROM Instalacion t " + 
-                                "WHERE  t.id_toma LIKE :id_instalacion" + 
-                                " AND t.id_instalacion LIKE :id_sensor")
-                                .setParameter("id_instalacion", instalacion.getId_instalacion())
-                                .setParameter("id_sensor", instalacion.getId_sensor());
-        
-        try{
-            res = (Instalacion)q.getSingleResult();
-        } catch(NonUniqueResultException e){
-            res = (Instalacion)q.getResultList().get(0);
-        } catch (Exception e){
+        Query q = em.createQuery("SELECT i FROM Instalacion i " + "WHERE i.id_instalacion = :id").setParameter("id",
+                id_i);
+
+        try {
+            res = (Instalacion) q.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            res = (Instalacion) q.getResultList().get(0);
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally{
+        } finally {
             em.close();
             return res;
         }
     }
-    
-    public ArrayList<Instalacion> leerMultiple(){
-        //TO DO
+
+    public static Instalacion leerSingle(Instalacion instalacion) {
+        EntityManager em = emf.createEntityManager();
+        Instalacion res = null;
+        Query q = em
+                .createQuery("SELECT t FROM Instalacion t " + "WHERE  t.id_toma LIKE :id_instalacion"
+                        + " AND t.id_instalacion LIKE :id_sensor")
+                .setParameter("id_instalacion", instalacion.getId_instalacion())
+                .setParameter("id_sensor", instalacion.getId_sensor());
+
+        try {
+            res = (Instalacion) q.getSingleResult();
+        } catch (NonUniqueResultException e) {
+            res = (Instalacion) q.getResultList().get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+            return res;
+        }
+    }
+
+    public static ArrayList<Instalacion> leerMultiple() {
+        // TO DO
         return null;
-    } 
-    
-    public boolean actualizar(Instalacion s, Instalacion new_s){
+    }
+
+    public static boolean actualizar(Instalacion s, Instalacion new_s) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;
-        
-        try{
+
+        try {
             s = leerSingle(s);
-            s = (Instalacion)new_s.clone();
+            s = (Instalacion) new_s.clone();
             em.merge(s);
             em.getTransaction().commit();
             done = true;
-            
-        }catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();
-        } finally{
+        } finally {
             em.close();
             return done;
         }

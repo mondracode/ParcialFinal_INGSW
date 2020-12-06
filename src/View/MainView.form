@@ -31,7 +31,7 @@
                       <Component id="enviarDatoB" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="mostrarDatosB" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="370" max="32767" attributes="0"/>
+                      <EmptySpace pref="523" max="32767" attributes="0"/>
                       <Component id="paraParcialB" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>

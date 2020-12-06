@@ -16,21 +16,19 @@ import javax.persistence.Table;
  * @author smggu
  */
 @Entity
-@Table(name="Sensor")
+@Table(name = "Sensor")
 public class Sensor {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
+    private int id_sensor;
+
     private String tipo, nombre;
     private int min_permitido, max_permitido, num_horas;
     private boolean promedio;
 
     public Sensor() {
     }
-    
-    
 
     public Sensor(String tipo, String nombre, int min_permitido, int max_permitido, int num_horas, boolean promedio) {
         this.tipo = tipo;
@@ -40,8 +38,6 @@ public class Sensor {
         this.num_horas = num_horas;
         this.promedio = promedio;
     }
-    
-    
 
     public String getTipo() {
         return tipo;
@@ -91,16 +87,15 @@ public class Sensor {
         this.promedio = promedio;
     }
 
-    public int getId() {
-        return id;
+    public int getId_sensor() {
+        return id_sensor;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_sensor(int id_sensor) {
+        this.id_sensor = id_sensor;
     }
-    
-    
-    public Sensor clone() throws CloneNotSupportedException{
+
+    public Sensor clone() throws CloneNotSupportedException {
         Sensor cloned = (Sensor) super.clone();
         return cloned;
     }

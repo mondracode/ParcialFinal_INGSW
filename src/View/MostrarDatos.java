@@ -36,21 +36,24 @@ public class MostrarDatos extends javax.swing.JPanel {
         IDTextField = new javax.swing.JTextField();
         mostrarB = new javax.swing.JButton();
         IDLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
 
         tablaTramas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID Toma", "ID Sensor", "Valor tomado", "Fecha y hora", "Procesamiento"
+                "ID Toma", "ID Instalación", "Ubicación", "Valor tomado", "Fecha y hora", "Procesamiento"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tablaTramas);
-        if (tablaTramas.getColumnModel().getColumnCount() > 0) {
-            tablaTramas.getColumnModel().getColumn(0).setResizable(false);
-            tablaTramas.getColumnModel().getColumn(3).setResizable(false);
-        }
 
         IDTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,27 +68,25 @@ public class MostrarDatos extends javax.swing.JPanel {
             }
         });
 
-        IDLabel.setText("ID del Sensor");
-
-        jLabel1.setText("Inserta un ID entre 1 y 38");
+        IDLabel.setText("ID de la instalación");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(IDLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(mostrarB)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addContainerGap(155, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(IDLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(mostrarB)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -95,8 +96,7 @@ public class MostrarDatos extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(mostrarB)
-                    .addComponent(IDLabel)
-                    .addComponent(jLabel1))
+                    .addComponent(IDLabel))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -109,9 +109,10 @@ public class MostrarDatos extends javax.swing.JPanel {
 
     private void mostrarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarBActionPerformed
         // TODO add your handling code here:
-        
-        ArrayList<Object[]> rows = Controller.GestorDatos.mostrarTramas(Integer.parseInt(IDTextField.getText()));
         DefaultTableModel model = (DefaultTableModel)tablaTramas.getModel();
+        model.setRowCount(0);
+        ArrayList<Object[]> rows = Controller.GestorDatos.mostrarTramas(Integer.parseInt(IDTextField.getText()));
+        
         
         for (int i = 0; i < rows.size(); i++) {
             model.addRow(rows.get(i));
@@ -122,7 +123,6 @@ public class MostrarDatos extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IDLabel;
     private javax.swing.JTextField IDTextField;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton mostrarB;
     private javax.swing.JTable tablaTramas;
