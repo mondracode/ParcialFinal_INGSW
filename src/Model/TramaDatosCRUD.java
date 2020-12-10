@@ -48,13 +48,12 @@ public class TramaDatosCRUD {
         }
     }
 
-    public static TramaDatos leerSingle(TramaDatos trama) {
+    public static TramaDatos leerSingle(int id_s) {
         EntityManager em = emf.createEntityManager();
         TramaDatos res = null;
         Query q = em
-                .createQuery("SELECT t FROM TramaDatos t " + "WHERE  t.id_toma LIKE :id_toma"
-                        + " AND t.id_sensor LIKE :id_sensor")
-                .setParameter("id_toma", trama.getId_toma()).setParameter("id_sensor", trama.getId_instalacion());
+                .createQuery("SELECT t FROM TramaDatos t " + "WHERE  t.id_instalacion =:id_instalacion ORDER BY t.id_toma DESC")
+                .setParameter("id_instalacion", id_s);
 
         try {
             res = (TramaDatos) q.getSingleResult();
@@ -69,7 +68,6 @@ public class TramaDatosCRUD {
     }
 
     public static ArrayList<TramaDatos> leerMultiple(int id_s) {
-        // TO DO
         EntityManager em = emf.createEntityManager();
         List<TramaDatos> res = null;
         Query q = em
@@ -95,25 +93,45 @@ public class TramaDatosCRUD {
         }
 
     }
-
-    public static boolean actualizar(TramaDatos t, TramaDatos new_t) {
+    
+    public static ArrayList<TramaDatos> leerPorFecha(String fecha){
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        boolean done = false;
-
+        List<TramaDatos> res = null;
+        Query q = em
+                .createQuery("SELECT t FROM TramaDatos t " + "WHERE  t.fecha_toma LIKE :fecha_toma")
+                .setParameter("fecha_toma", fecha);
+        
         try {
-            t = leerSingle(t);
-            t = (TramaDatos) new_t.clone();
-            em.merge(t);
-            em.getTransaction().commit();
-            done = true;
-
+            res = q.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            em.getTransaction().rollback();
         } finally {
             em.close();
-            return done;
+            ArrayList<TramaDatos> list = new ArrayList<>(res.size());
+            list.addAll(res);
+
+            return list;
         }
     }
+
+//    public static boolean actualizar(TramaDatos t, TramaDatos new_t) {
+//        EntityManager em = emf.createEntityManager();
+//        em.getTransaction().begin();
+//        boolean done = false;
+//
+//        try {
+//            t = leerSingle(t);
+//            t = (TramaDatos) new_t.clone();
+//            em.merge(t);
+//            em.getTransaction().commit();
+//            done = true;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            em.getTransaction().rollback();
+//        } finally {
+//            em.close();
+//            return done;
+//        }
+//    }
 }

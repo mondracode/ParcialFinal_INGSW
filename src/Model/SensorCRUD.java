@@ -91,14 +91,35 @@ public class SensorCRUD {
         return null;
     }
 
-    public static boolean actualizar(Sensor s, Sensor new_s) {
+    public static boolean actualizarPromedio(int id_s, boolean p) {
+        Sensor s = buscarSensor(id_s);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         boolean done = false;
 
         try {
-            s = leerSingle(s);
-            s = (Sensor) new_s.clone();
+            s.setPromedio(p);
+            em.merge(s);
+            em.getTransaction().commit();
+            done = true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+            return done;
+        }
+    }
+    
+    public static boolean actualizarHoras(int id_s, int h) {
+        Sensor s = buscarSensor(id_s);
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        boolean done = false;
+
+        try {
+            s.setNum_horas(h);
             em.merge(s);
             em.getTransaction().commit();
             done = true;

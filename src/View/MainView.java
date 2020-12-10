@@ -13,6 +13,7 @@ public class MainView extends javax.swing.JFrame {
     
     private EnviarDato enviar_dato = new EnviarDato();
     private MostrarDatos mostrar_datos = new MostrarDatos();
+    private ProcesarDato procesar_dato = new ProcesarDato();
 
     /**
      * Creates new form MainView
@@ -32,7 +33,7 @@ public class MainView extends javax.swing.JFrame {
 
         enviarDatoB = new javax.swing.JButton();
         mostrarDatosB = new javax.swing.JButton();
-        paraParcialB = new javax.swing.JButton();
+        procesamientoB = new javax.swing.JButton();
         panelPrincipal = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,10 +52,10 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        paraParcialB.setText("Para el parcial");
-        paraParcialB.addActionListener(new java.awt.event.ActionListener() {
+        procesamientoB.setText("Procesamiento de datos");
+        procesamientoB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                paraParcialBActionPerformed(evt);
+                procesamientoBActionPerformed(evt);
             }
         });
 
@@ -73,8 +74,8 @@ public class MainView extends javax.swing.JFrame {
                         .addComponent(enviarDatoB)
                         .addGap(18, 18, 18)
                         .addComponent(mostrarDatosB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 523, Short.MAX_VALUE)
-                        .addComponent(paraParcialB)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 468, Short.MAX_VALUE)
+                        .addComponent(procesamientoB)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -84,7 +85,7 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(enviarDatoB)
                     .addComponent(mostrarDatosB)
-                    .addComponent(paraParcialB))
+                    .addComponent(procesamientoB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
                 .addContainerGap())
@@ -109,9 +110,13 @@ public class MainView extends javax.swing.JFrame {
         panelPrincipal.setVisible(true);
     }//GEN-LAST:event_mostrarDatosBActionPerformed
 
-    private void paraParcialBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paraParcialBActionPerformed
+    private void procesamientoBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procesamientoBActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_paraParcialBActionPerformed
+        panelPrincipal.setVisible(false);
+        panelPrincipal.removeAll();
+        panelPrincipal.add(procesar_dato);
+        panelPrincipal.setVisible(true);
+    }//GEN-LAST:event_procesamientoBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,6 +157,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton enviarDatoB;
     private javax.swing.JButton mostrarDatosB;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JButton paraParcialB;
+    private javax.swing.JButton procesamientoB;
     // End of variables declaration//GEN-END:variables
 }

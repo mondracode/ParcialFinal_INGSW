@@ -31,8 +31,8 @@
                       <Component id="enviarDatoB" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="mostrarDatosB" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="523" max="32767" attributes="0"/>
-                      <Component id="paraParcialB" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="468" max="32767" attributes="0"/>
+                      <Component id="procesamientoB" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -46,7 +46,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="enviarDatoB" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="mostrarDatosB" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="paraParcialB" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="procesamientoB" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="panelPrincipal" pref="315" max="32767" attributes="0"/>
@@ -72,12 +72,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mostrarDatosBActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="paraParcialB">
+    <Component class="javax.swing.JButton" name="procesamientoB">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Para el parcial"/>
+        <Property name="text" type="java.lang.String" value="Procesamiento de datos"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="paraParcialBActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="procesamientoBActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="panelPrincipal">
